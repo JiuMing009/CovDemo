@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jy.mapper.PassengerMapper">
+<!-- ctrl+shift+/注释 -->
+<!-- ctrl+shift+\取消注释 -->
+	<!--全查-->
+	<select id="selectAll" resultType="Passenger">
+		select * from pi;
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="addPassenger">
+		insert into pi(pname,age,sex,flt,nucleci,time,temperature,vaccine) values
+		(#{pname},#{age},#{sex},#{flt},#{nucleci},#{time},#{temperature},#{vaccine});
+	</insert>
+	
+	<!-- 回显 -->
+	<select id="passengerById" resultType="Passenger">
+		select * from pi where id = #{id};
+	</select>
+	
+	<!-- 修改 -->
+	<update id="updatePassenger">
+		update pi set pname=#{pname},age=#{age},sex=#{sex},flt=#{flt},nucleci=#{nucleci},
+		time=#{time},temperature=#{temperature},vaccine=#{vaccine} where id =#{id};
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="deletePassenger">
+		delete from pi where id = #{id};
+	</delete>
+	
+	<!-- 按id查 -->
+	<!-- <select id="selectID" resultType="Passenger" parameterType="Integer">
+		select * from pi where id=#{id};
+		
+	</select> -->
+	
+	<!-- 按姓名查 -->
+	<!-- <select id="selectName" resultType="Passenger" parameterType="String">
+		select * from pi where pname like concat('%',#{pname},'%');
+	</select> -->
+	
+	<!-- 多条件查询 -->
+	<select id="selectMore" resultType="Passenger">
+		select * from pi where 1=1
+		<!-- <where> -->
+			<if test="pname !=null and pname !=''" >
+				and pname like concat('%',#{pname},'%')
+			</if>
+			
+			<if test="sex !=null and sex !='全部'">
+				and sex =#{sex}
+			</if>
+			
+			<if test="flt !=null and flt !=''">
+				and flt =#{flt}
+			</if>
+			<if test="nucleci !=null and nucleci !='全部'">
+				and nucleci =#{nucleci}
+			</if>
+		<!-- </where> -->
+	</select>
+	
+</mapper> 
